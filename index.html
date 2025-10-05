@@ -5,21 +5,23 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pluffyee & Taki Diary</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Crimson+Text&display=swap');
+
     body {
-      font-family: "Georgia", serif;
-      background: linear-gradient(135deg, #fce4ec 0%, #e8f5e9 100%);
       margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      height: 100vh;
+      background: linear-gradient(135deg, #fce4ec 0%, #e8f5e9 100%);
+      font-family: 'Crimson Text', serif;
       overflow: hidden;
     }
 
     .book {
-      width: 700px;
-      height: 500px;
-      perspective: 2000px;
+      width: 800px;
+      height: 550px;
+      perspective: 2500px;
       position: relative;
     }
 
@@ -28,40 +30,48 @@
       height: 100%;
       background: #fff;
       border-radius: 8px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
       position: absolute;
       top: 0;
       left: 0;
       transform-origin: left center;
-      transition: transform 1s ease;
+      transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
       display: flex;
       flex-direction: row;
+      background: linear-gradient(90deg, #fafafa 95%, #f0f0f0 100%);
     }
 
     .page .date {
-      width: 25%;
-      background: #f8f8f8;
-      border-right: 1px solid #ddd;
+      width: 22%;
       padding: 1.5rem;
       font-weight: bold;
-      font-size: 1.2rem;
-      color: #555;
+      font-size: 1.1rem;
+      font-family: 'Dancing Script', cursive;
+      color: #888;
+      border-right: 2px dashed #ddd;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
     }
 
     .page .content {
       flex: 1;
-      padding: 2rem;
+      padding: 2.2rem;
     }
 
     .page h1 {
-      font-size: 1.5rem;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
       margin: 0 0 1rem;
+      color: #d81b60;
     }
 
     .page p {
-      font-size: 1rem;
-      line-height: 1.5;
+      font-size: 1.1rem;
+      line-height: 1.6;
       color: #444;
+      margin: 0.5rem 0;
     }
 
     /* Page flip effect */
@@ -70,15 +80,16 @@
       z-index: 0;
     }
 
-    /* Stack pages nicely */
-    .page:nth-child(1) { z-index: 3; }
-    .page:nth-child(2) { z-index: 2; }
-    .page:nth-child(3) { z-index: 1; }
+    /* Layer pages */
+    .page:nth-child(1) { z-index: 4; }
+    .page:nth-child(2) { z-index: 3; }
+    .page:nth-child(3) { z-index: 2; }
+    .page:nth-child(4) { z-index: 1; }
 
-    /* Navigation buttons */
+    /* Navigation */
     .controls {
       position: absolute;
-      bottom: -60px;
+      bottom: -70px;
       width: 100%;
       text-align: center;
     }
@@ -87,20 +98,38 @@
       background: #ff80ab;
       color: white;
       border: none;
-      padding: 10px 20px;
-      margin: 0 10px;
+      padding: 12px 24px;
+      margin: 0 15px;
       font-size: 1rem;
       border-radius: 6px;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      font-family: 'Crimson Text', serif;
+      font-weight: bold;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      transition: 0.3s;
     }
     button:hover {
       background: #f06292;
+      transform: translateY(-2px);
+    }
+
+    /* Add book spine shadow */
+    .book::before {
+      content: "";
+      position: absolute;
+      left: -20px;
+      top: 0;
+      width: 20px;
+      height: 100%;
+      background: linear-gradient(to right, #c8a2c8, #d8bfd8);
+      border-radius: 8px 0 0 8px;
+      box-shadow: inset -3px 0 5px rgba(0,0,0,0.2);
     }
   </style>
 </head>
 <body>
   <div class="book">
+    <!-- Page 1 -->
     <div class="page">
       <div class="date">2025-10-04</div>
       <div class="content">
@@ -110,14 +139,14 @@
       </div>
     </div>
 
+    <!-- Page 2 -->
     <div class="page">
       <div class="date">2025-10-05</div>
       <div class="content">
         <h1>Nhật ký tình iu 🐾</h1>
-        <p>QUÝ DIAPY CỦA TUI HỌC CHO GIỎI LÀM KTRA THIỆT CAO ĐỂ AIU HUN BÉ THIỆT NHÌU EHE IU BÉ IU LẮM AIU NGỦ THIỆT NGON MAI DẬY CHƠI BÉ IU NHÌU NÈ EHE IU LẮM LẮM LUN</p>
+        <p>QUÝ DIAPY CỦA TUI HỌC CHO GIỎI LÀM KTRA THIỆT CAO ĐỂ AIU HUN BÉ THIỆT NHÌU EHE IU BÉ IU LẮM AIU NGỦ THIỆT NGON MAI DẬY CHƠI BÉ IU NHÌU NÈ EHE IU LẮM LẮM LUN 💕</p>
       </div>
     </div>
-
 
     <div class="controls">
       <button onclick="prevPage()">◀ Trước</button>
