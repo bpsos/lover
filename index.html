@@ -6,51 +6,152 @@
   <title>Pluffyee & Taki Diary</title>
   <style>
     body {
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      margin: 0;
-      padding: 2rem;
+      font-family: "Georgia", serif;
       background: linear-gradient(135deg, #fce4ec 0%, #e8f5e9 100%);
-      color: #222;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
     }
-    .card {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-      text-align: center;
-      margin-bottom: 1.5rem;
-      max-width: 500px;
+
+    .book {
+      width: 700px;
+      height: 500px;
+      perspective: 2000px;
+      position: relative;
+    }
+
+    .page {
       width: 100%;
+      height: 100%;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: left center;
+      transition: transform 1s ease;
+      display: flex;
+      flex-direction: row;
     }
-    h1 { margin: 0 0 0.5rem; font-size: 1.4rem; }
-    p { margin: 0.2rem 0; font-size: 1.05rem; color: #555; }
-    .date {
-      font-size: 0.9rem;
-      color: #999;
-      margin-bottom: 0.8rem;
+
+    .page .date {
+      width: 25%;
+      background: #f8f8f8;
+      border-right: 1px solid #ddd;
+      padding: 1.5rem;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #555;
+    }
+
+    .page .content {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .page h1 {
+      font-size: 1.5rem;
+      margin: 0 0 1rem;
+    }
+
+    .page p {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #444;
+    }
+
+    /* Page flip effect */
+    .page.flipped {
+      transform: rotateY(-180deg);
+      z-index: 0;
+    }
+
+    /* Stack pages nicely */
+    .page:nth-child(1) { z-index: 3; }
+    .page:nth-child(2) { z-index: 2; }
+    .page:nth-child(3) { z-index: 1; }
+
+    /* Navigation buttons */
+    .controls {
+      position: absolute;
+      bottom: -60px;
+      width: 100%;
+      text-align: center;
+    }
+
+    button {
+      background: #ff80ab;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    button:hover {
+      background: #f06292;
     }
   </style>
 </head>
 <body>
-  <!-- Entry 1 -->
-  <div class="card">
-    <div class="date">2025-10-04</div>
-    <h1>Pluffyee là ny của Taki</h1>
-    <p>Con derg diapy stink thì thui rùi ehe💖</p>
-    <p>Con derg ko stink thì ai stink có cái diapy quay đi hoài💖</p>
+  <div class="book">
+    <div class="page">
+      <div class="date">2025-10-04</div>
+      <div class="content">
+        <h1>Pluffyee là ny của Taki 💖</h1>
+        <p>Con derg diapy stink thì thui rùi ehe💖</p>
+        <p>Con derg ko stink thì ai stink có cái diapy quay đi hoài💖</p>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="date">2025-10-05</div>
+      <div class="content">
+        <h1>Nhật ký tình iu 🐾</h1>
+        <p>QUÝ DIAPY CỦA TUI HỌC CHO GIỎI LÀM KTRA THIỆT CAO ĐỂ AIU HUN BÉ THIỆT NHÌU EHE IU BÉ IU LẮM AIU NGỦ THIỆT NGON MAI DẬY CHƠI BÉ IU NHÌU NÈ EHE IU LẮM LẮM LUN</p>
+      </div>
+    </div>
+
+
+    <div class="controls">
+      <button onclick="prevPage()">◀ Trước</button>
+      <button onclick="nextPage()">Sau ▶</button>
+    </div>
   </div>
 
-  <!-- Entry 2 -->
-  <div class="card">
-    <div class="date">2025-10-05</div>
-    <h1>QUÝ DIAPY CỦA TUI HỌC CHO GIỎI LÀM KTRA THIỆT CAO ĐỂ AIU HUN BÉ THIỆT NHÌU EHE IU BÉ IU LẮM AIU NGỦ THIỆT NGON MAI DẬY CHƠI BÉ IU NHÌU NÈ EHE IU LẮM LẮM LUN 💕</h1>
-  </div>
+  <script>
+    let current = 0;
+    const pages = document.querySelectorAll(".page");
 
+    function showPage(index) {
+      pages.forEach((page, i) => {
+        if (i < index) {
+          page.classList.add("flipped");
+        } else {
+          page.classList.remove("flipped");
+        }
+      });
+    }
 
+    function nextPage() {
+      if (current < pages.length) {
+        current++;
+        showPage(current);
+      }
+    }
+
+    function prevPage() {
+      if (current > 0) {
+        current--;
+        showPage(current);
+      }
+    }
+  </script>
 </body>
 </html>
